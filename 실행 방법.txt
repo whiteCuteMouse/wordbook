@@ -1,1 +1,0 @@
-streamlit run 메인.py [-- script agrs]
