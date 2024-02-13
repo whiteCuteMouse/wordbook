@@ -623,9 +623,12 @@ else:
     with phase_main.container():
         with st.expander("단어장 선택"):#init phase
             st.session_state['df_learning'] = wordbooklist.show_list()
-        st.markdown("#### 미리보기")
+        st.markdown("#### 미리 보기")
         st.dataframe(st.session_state['df_learning'], hide_index = True,
                     column_config={
+                       "단어": st.column_config.TextColumn(
+                      width="medium"
+                      ),
                         "뜻": st.column_config.TextColumn(
                             width="large"
                             ),
