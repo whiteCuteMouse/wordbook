@@ -103,11 +103,17 @@ def show_list(mode="show"):
         
         #단어장 모음 목록 출력
         #df_folders = pd.DataFrame({'폴더 이름':[folder[folder.find('\\')+1:] for folder in folders], '경로':folders})
+
+        SB_options = []
+        pattern = re.compile(r"/([^/]+)$")
+        
+        for f_path in folders:
+            match = pattern.search(f_path)
+            SB_options.append(match.group(1))
         
         folder_selected = st.selectbox(
             '단어장 모음 선택',
-            sorted([folder[folder.find('\\')+1:] for folder in folders]))
-        st.write( folders)
+            sorted(SB_options))
         files = os.listdir( wordbook_path+'/'+folder_selected)
         
         
