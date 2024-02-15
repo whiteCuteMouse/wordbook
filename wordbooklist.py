@@ -107,7 +107,7 @@ def show_list(mode="show"):
         folder_selected = st.selectbox(
             '단어장 모음 선택',
             sorted([folder[folder.find('\\')+1:] for folder in folders]))
-        st.write('./')
+        st.write( os.listdir())
         files = os.listdir( wordbook_path+'/'+folder_selected)
         
         
