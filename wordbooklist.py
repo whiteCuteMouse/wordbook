@@ -108,7 +108,7 @@ def show_list(mode="show"):
             '단어장 모음 선택',
             sorted([folder[folder.find('\\')+1:] for folder in folders]))
 
-        files = os.listdir( wordbook_path+'/'+folder_selected)
+        files = os.listdir( wordbook_path+'//'+folder_selected)
         
         # csv를 가진 파일 목록을 필터링하여 반환
         wordbook_files = [file for file in files if file.endswith("csv")]
