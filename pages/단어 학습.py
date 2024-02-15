@@ -232,9 +232,12 @@ def rotate_card(df_word, if_test_if_result, max_len):
     if st.session_state['j']:#뜻 보여주기 위해
         card_label = word_pronounce
     else:#단어 보여주기 위해
-        if re.search('(.+)\s+(.+)', word_pronounce):
-            word = re.search('(.+)\s+(.+)', word_pronounce).group(1)
-            pronounce = re.search('(.+)\s+(.+)', word_pronounce).group(2)
+        pattern = re.compile(r"(.+)\s+(?=\[)(.+)")
+        
+        s = pattern.search(word_pronounce)
+        if s:
+            word = s.group(1)
+            pronounce = s.group(2)
             #wordbooklist.p_write(f"{word}<br>{pronounce}", font_size = 80)
             card_label = f"""{word}  
             {pronounce}"""
@@ -498,16 +501,18 @@ elif st.session_state['test_config']:
                                         ),
                                 })
                 with tab2:
-                    if view_select == "전체":
+                    if view_select == "전체":#전체 문항 개별 보기(rotate)
                         rotate_card(st.session_state['df_test'], if_result, st.session_state['nQuiz'])
-                    elif view_select == "정답만":
+                        st.markdown(f"##### 정답 : {filtered_answer_sheet['정답'].reset_index(drop=True)[st.session_state['i']]}번")
+                        
+                    elif view_select == "정답만":#정답만 문항 개별 보기(rotate)
                         if st.session_state['i'] > nCorrect-1 and nCorrect > 0:
                             st.session_state['i'] = nCorrect - 1#인덱스가 가질 수 있는 최댓값 = 개수-1
-                        
                         if nCorrect > 0:
                             rotate_card(st.session_state['df_test'][answer_sheet['정답'] == answer_sheet['나의 답']], if_result, st.session_state['nQuiz'] - nWrong)
                             st.markdown(f"##### 정답 : {filtered_answer_sheet['정답'].reset_index(drop=True)[st.session_state['i']]}번")
-                    elif view_select == "오답만":
+                            
+                    elif view_select == "오답만":#오답만 문항 개별 보기(rotate)
                         if st.session_state['i'] > nWrong-1 and nWrong > 0:
                             st.session_state['i'] = nWrong - 1#인덱스가 가질 수 있는 최댓값 = 개수-1
                         if nWrong > 0:
@@ -525,7 +530,7 @@ elif st.session_state['test_config']:
                     st.download_button(
                         label="오답노트 다운로드",
                         data=wordbooklist.convert_df(st.session_state['df_test'][answer_sheet['정답'] != answer_sheet['나의 답']]),
-                        file_name=f"오답노트 {datetime.datetime.now()}.csv",
+                        file_name=wordbooklist.make_file_name("오답노트", "csv"),
                         mime='text/csv',
                         type="primary"
                     )
@@ -624,11 +629,14 @@ else:
         with st.expander("단어장 선택"):#init phase
             st.session_state['df_learning'] = wordbooklist.show_list()
         st.markdown("#### 미리 보기")
+        #if 'df_learning' in st.session_state:#다른 phase에서 뒤로가기 했을 때 그전에 로드했던 거 불러오기
+        #    df_learning = st.session_state['df_learning']
+
         st.dataframe(st.session_state['df_learning'], hide_index = True,
                     column_config={
-                       "단어": st.column_config.TextColumn(
-                      width="medium"
-                      ),
+                        "단어": st.column_config.TextColumn(
+                            width="medium"
+                            ),
                         "뜻": st.column_config.TextColumn(
                             width="large"
                             ),
