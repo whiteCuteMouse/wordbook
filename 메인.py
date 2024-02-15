@@ -2,9 +2,10 @@ import streamlit as st
 import pandas as pd
 import re
 
+version = "v1.0.1"
 try:
    st.set_page_config(
-      page_title="단어 공부 앱",
+      page_title="단어 공부 앱 " + version,
       page_icon="📝",
       layout="centered",#centered가 기본값. 고정 너비 안에 element들을 제한. wide는 화면 전체를 사용함.
       initial_sidebar_state="expanded")
@@ -14,7 +15,7 @@ except:
 #with st.sidebar:
 #    st.header("메뉴")
 
-st.title("단어 공부 앱")
+st.title("단어 공부 앱 " + version)
 with st.container():
     st.markdown("""- #### 간단한 단어 공부 앱입니다.""")
     st.markdown("""- #### 나만의 학습장을 만들어 단어를 공부하고, 시험을 볼 수 있습니다.""")
@@ -22,3 +23,5 @@ with st.container():
     st.markdown("""- #### 오답노트를 다운로드할 수 있습니다.""")
     st.markdown("""- #### 기본 단어장은 천천히 추가될 예정입니다.""")
     st.markdown("""- ###### 문의 : dpfka357@naver.com""")
+    st.markdown("""- ###### 최초 배포일 : 2024-02-14""")
+    st.markdown("""- ###### 마지막 업데이트 : 2024-02-15""")
