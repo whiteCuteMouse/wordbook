@@ -619,12 +619,14 @@ elif st.session_state['test_config']:
             with timer_col2:
                 seconds = st.number_input('ts', disabled = not use_timer, key = "timer_sec", label_visibility="collapsed", step=10, value = 0, min_value = 0, max_value = 59, format = "%d")
             
-            if st.session_state['quiz_mode'] == '단어':
+            if 'quiz_mode' in st.session_state and st.session_state['quiz_mode'] == '단어':
                 multiple_answer = st.toggle('복수 정답', value = True if 'multiple_answer' not in st.session_state else st.session_state['multiple_answer'])
-            else:
+            elif 'quiz_mode' in st.session_state and st.session_state['quiz_mode'] == '뜻':
                 st.session_state['multiple_answer'] = False
                 multiple_answer = st.toggle('복수 정답', value = True if 'multiple_answer' not in st.session_state else st.session_state['multiple_answer'], disabled = True)
-        
+            else:
+                multiple_answer = st.toggle('복수 정답', value = True if 'multiple_answer' not in st.session_state else st.session_state['multiple_answer'])
+               
         with phase_control_panel.container():
             col_btn1, col_btn2 = st.columns([1, 5])
             with col_btn1:
