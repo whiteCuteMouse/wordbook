@@ -270,7 +270,7 @@ def rotate_card(df_word, if_test_if_result, max_len):
         
             
         elif if_test_if_result & if_test:
-            if st.session_state['quiz_mode']:# 카드가 단어
+            if st.session_state['face_meaning']:# 카드가 단어
                card_reverse = cb.custom_button(label = card_label+"단어", type="custom", use_container_width=True, height=f"{card_height}px", font_size=f"{font_size}px")
             else:# 카드가 뜻
                card_reverse = cb.custom_button(label = random.choice(card_label.split(';'))+"뜻", type="custom", use_container_width=True, height=f"{card_height}px", font_size=f"{font_size}px")
