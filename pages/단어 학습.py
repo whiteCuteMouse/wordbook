@@ -623,7 +623,7 @@ elif st.session_state['test_config']:
                 multiple_answer = st.toggle('복수 정답', value = True if 'multiple_answer' not in st.session_state else st.session_state['multiple_answer'])
             elif quiz_mode == '뜻':
                 st.session_state['multiple_answer'] = False
-                multiple_answer = st.toggle('복수 정답', value = True if 'multiple_answer' not in st.session_state else st.session_state['multiple_answer'], disabled = True)
+                multiple_answer = st.toggle('복수 정답', value = False, disabled = True)
                
         with phase_control_panel.container():
             col_btn1, col_btn2 = st.columns([1, 5])
